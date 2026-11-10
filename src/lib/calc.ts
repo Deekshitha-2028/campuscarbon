@@ -298,7 +298,7 @@ export function computeResults(
       radiationKWhM2: H,
       solarKWh: solar,
       co2Kg: co2,
-      co2AvoidedKg: solar === null ? null : co2Avoided(Math.min(solar, consumption), input.factor),
+      co2AvoidedKg: solar === null ? null : co2Avoided(solar, input.factor),
       netGridKWh: net,
       netCo2Kg: kWhToCO2(net, input.factor),
       offsetPct: solar === null ? null : offsetShare(solar, consumption),
