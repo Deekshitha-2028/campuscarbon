@@ -1,6 +1,6 @@
 import { createLocalStore } from "@/lib/localStore";
 import { useEffect } from "react";
-import { useLocalStore } from "./useLocalStore";
+import { useHydrated, useLocalStore } from "./useLocalStore";
 
 export type Theme = "light" | "dark";
 
@@ -18,7 +18,8 @@ export const THEME_BOOT_SCRIPT = `(function(){try{var t=JSON.parse(localStorage.
 
 export function useTheme() {
   const saved = useLocalStore(themeStore);
-  const theme: Theme = saved ?? (typeof window === "undefined" ? "light" : systemTheme());
+  const hydrated = useHydrated();
+  const theme: Theme = hydrated ? (saved ?? systemTheme()) : "light";
 
   useEffect(() => {
     const root = document.documentElement;
