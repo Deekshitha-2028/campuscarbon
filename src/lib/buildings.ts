@@ -89,15 +89,17 @@ function isCalcInput(v: unknown): v is CalcInput {
   );
 }
 
-/** The calculation currently shown on /results. */
-export const currentInputStore = createLocalStore<CalcInput | null>("cc:current", null, (raw) =>
-  isCalcInput(raw) ? raw : null,
-);
+export interface CurrentCalc {
+  input: CalcInput;
+  /** Set when this calculation is (or came from) a saved building. */
+  savedId: string | null;
+  computedAt: number;
+}
 
-/** Draft of the calculator form so a refresh doesn't lose work. */
-export const draftStore = createLocalStore<{ input: CalcInput; step: number } | null>("cc:draft", null, (raw) => {
-  const r = raw as { input: unknown; step: unknown } | null;
-  return r && isCalcInput(r.input) && typeof r.step === "number" ? (r as { input: CalcInput; step: number }) : null;
+/** The calculation currently shown on /results. */
+export const currentCalcStore = createLocalStore<CurrentCalc | null>("cc:current", null, (raw) => {
+  const r = raw as CurrentCalc | null;
+  return r && isCalcInput(r.input) ? { input: r.input, savedId: r.savedId ?? null, computedAt: r.computedAt ?? 0 } : null;
 });
 
 export const buildingsStore = createLocalStore<SavedBuilding[]>("cc:buildings", [], (raw) =>
