@@ -4,6 +4,11 @@ import { Button } from "@/components/ui/button";
 import { SunGridIllustration } from "@/components/home/SunGridIllustration";
 import { LiveSolarCard } from "@/components/solar/LiveSolarCard";
 import { CEA_FACTORS } from "@/lib/emissionFactors";
+import { exampleInput } from "@/lib/buildings";
+import type { MonthlyRadiation } from "@/lib/calc";
+import { fixed, num, tonnes } from "@/lib/format";
+import { useCampusLocation } from "@/hooks/useCampusLocation";
+import { useArchive } from "@/hooks/useSolarData";
 
 const TITLE = "CampusCarbon: Tumakuru — your building's carbon vs. its rooftop sun";
 const DESC =
@@ -41,8 +46,16 @@ const STEPS = [
   },
 ];
 
+const exampleKWh = exampleInput().months.reduce((a, m) => a + (m.kWh ?? 0), 0);
+
 function Home() {
   const latest = CEA_FACTORS[0];
+  const { location } = useCampusLocation();
+  const archive = useArchive(location.id);
+  const best = (archive.data?.data.monthly ?? []).reduce<MonthlyRadiation | null>(
+    (b, m) => (!b || m.peakSunHours > b.peakSunHours ? m : b),
+    null,
+  );
   return (
     <>
       <section className="relative overflow-hidden bg-hero">
@@ -92,7 +105,9 @@ function Home() {
           <LiveSolarCard />
           <div className="rounded-2xl border border-border bg-card p-6 shadow-card">
             <p className="eyebrow">Why it matters</p>
-            <h2 className="mt-1 text-2xl font-bold">A 300-bed hostel can emit over 250 tonnes of CO₂ a year</h2>
+            <h2 className="mt-1 text-2xl font-bold">
+              Our sample 300-bed hostel emits about {tonnes(exampleKWh * latest.value, 0)} tonnes of CO₂ a year
+            </h2>
             <p className="mt-3 text-muted-foreground">
               Purchased electricity is a campus's biggest Scope 2 source. India's grid is still mostly coal, so each unit
               carries roughly two-thirds of a kilogram of CO₂. Tumakuru's flat terraces and clear February-to-May skies
@@ -104,8 +119,10 @@ function Home() {
                 <p className="text-xs text-muted-foreground">kg CO₂ per kWh</p>
               </div>
               <div className="rounded-xl bg-sun-soft p-3">
-                <p className="font-display text-2xl font-bold tabular">~5.5</p>
-                <p className="text-xs text-muted-foreground">kWh/m²/day, Feb–May</p>
+                <p className="font-display text-2xl font-bold tabular">{best ? fixed(best.peakSunHours, 1) : "…"}</p>
+                <p className="text-xs text-muted-foreground">
+                  peak sun h/day{best ? `, ${best.label}` : ""}
+                </p>
               </div>
               <div className="rounded-xl bg-leaf-soft p-3">
                 <p className="font-display text-2xl font-bold tabular">0.2</p>
@@ -113,7 +130,8 @@ function Home() {
               </div>
             </div>
             <p className="mt-3 text-xs text-muted-foreground">
-              Peak sun hours are typical values; the Solar data page shows the measured figures for the last 12 months.
+              Peak sun hours: the sunniest month in {location.name} over the last 12 months (Open-Meteo). The sample
+              hostel uses {num(exampleKWh)} kWh/year.
             </p>
           </div>
         </div>
