@@ -153,7 +153,7 @@ function RootComponent() {
           </main>
           <SiteFooter />
         </div>
-        <Toaster richColors position="bottom-right" />
+        <Toaster position="bottom-right" />
       </TooltipProvider>
     </QueryClientProvider>
   );
