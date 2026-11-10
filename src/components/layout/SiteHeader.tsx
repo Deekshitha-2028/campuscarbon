@@ -54,7 +54,7 @@ export function SiteHeader() {
               key={n.to}
               to={n.to}
               className="rounded-md px-3 py-2 text-sm font-medium text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
-              activeProps={{ className: "bg-secondary text-secondary-foreground", "aria-current": "page" }}
+              activeProps={{ className: "bg-secondary text-secondary-foreground" }}
             >
               {n.label}
             </Link>
