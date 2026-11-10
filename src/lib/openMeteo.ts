@@ -175,7 +175,12 @@ export async function fetchArchive(loc: CampusLocation, today = new Date()): Pro
   return withCache(`archive:${loc.id}:${endDate}`, async () => {
     const json = await getJson(archiveUrl(loc, startDate, endDate));
     return parseArchive(json, loc, startDate, endDate);
-  }).catch(async (err) => {
+  })
+    .then((r) => {
+      if (!r.fromCache) fallbackSignal.mark(`archive:${loc.id}`, false);
+      return r;
+    })
+    .catch(async (err) => {
     // Fall back to any older archive cache for this location (e.g. last month's).
     const older = findAnyCache<ArchiveData>(`archive:${loc.id}:`);
     if (older) {
