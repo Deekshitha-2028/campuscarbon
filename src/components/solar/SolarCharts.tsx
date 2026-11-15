@@ -152,8 +152,8 @@ export function RecentForecastChart({ daily }: { daily: { date: string; radiatio
           <YAxis {...axis} width={40} domain={[0, "auto"]} />
           <ChartTooltip content={<ChartTooltipContent />} />
           <Legend wrapperStyle={{ fontSize: 12 }} />
-          <Bar dataKey="past" name="Measured (kWh/m²)" fill="var(--color-past)" radius={[4, 4, 0, 0]} />
-          <Bar dataKey="forecast" name="Forecast (kWh/m²)" fill="var(--color-forecast)" radius={[4, 4, 0, 0]} />
+          <Bar stackId="d" dataKey="past" name="Measured (kWh/m²)" fill="var(--color-past)" radius={[4, 4, 0, 0]} />
+          <Bar stackId="d" dataKey="forecast" name="Forecast (kWh/m²)" fill="var(--color-forecast)" radius={[4, 4, 0, 0]} />
         </BarChart>
       </ChartContainer>
     </figure>
