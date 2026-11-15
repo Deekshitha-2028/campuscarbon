@@ -3,7 +3,7 @@ import { ArrowRight, Calculator, CloudSun, Factory, Receipt, SunMedium } from "l
 import { Button } from "@/components/ui/button";
 import { SunGridIllustration } from "@/components/home/SunGridIllustration";
 import { LiveSolarCard } from "@/components/solar/LiveSolarCard";
-import { CEA_FACTORS } from "@/lib/emissionFactors";
+import { LATEST_FACTOR } from "@/lib/emissionFactors";
 import { exampleInput } from "@/lib/buildings";
 import type { MonthlyRadiation } from "@/lib/calc";
 import { fixed, num, tonnes } from "@/lib/format";
@@ -37,7 +37,7 @@ const STEPS = [
   {
     icon: Factory,
     title: "Apply the grid factor",
-    body: `Multiply by CEA's all-India weighted average, ${CEA_FACTORS[0].value} kg CO₂/kWh for FY ${CEA_FACTORS[0].fy}. That's the Scope 2 footprint.`,
+    body: `Multiply by CEA's all-India weighted average, ${LATEST_FACTOR.value} kg CO₂/kWh for FY ${LATEST_FACTOR.fy}. That's the Scope 2 footprint.`,
   },
   {
     icon: SunMedium,
@@ -49,7 +49,7 @@ const STEPS = [
 const exampleKWh = exampleInput().months.reduce((a, m) => a + (m.kWh ?? 0), 0);
 
 function Home() {
-  const latest = CEA_FACTORS[0];
+  const latest = LATEST_FACTOR;
   const { location } = useCampusLocation();
   const archive = useArchive(location.id);
   const best = (archive.data?.data.monthly ?? []).reduce<MonthlyRadiation | null>(

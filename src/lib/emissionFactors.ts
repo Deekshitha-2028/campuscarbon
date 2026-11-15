@@ -25,7 +25,9 @@ export const CEA_FACTORS: readonly CeaFactor[] = [
   { id: "fy2022-23", fy: "2022-23", value: 0.716, version: "v19.0" },
 ] as const;
 
-export const DEFAULT_FACTOR_ID = CEA_FACTORS[0].id;
+/** The latest CEA factor (first row of the table). */
+export const LATEST_FACTOR: CeaFactor = CEA_FACTORS[0]!;
+export const DEFAULT_FACTOR_ID = LATEST_FACTOR.id;
 export const CUSTOM_FACTOR_ID = "custom";
 
 export interface GridChoice {
@@ -41,7 +43,7 @@ export interface ResolvedFactor {
 }
 
 export function getCeaFactor(id: string): CeaFactor {
-  return CEA_FACTORS.find((f) => f.id === id) ?? CEA_FACTORS[0];
+  return CEA_FACTORS.find((f) => f.id === id) ?? LATEST_FACTOR;
 }
 
 export function isValidCustomFactor(v: number | null | undefined): v is number {

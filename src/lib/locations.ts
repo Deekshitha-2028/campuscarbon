@@ -21,5 +21,5 @@ export const LOCATIONS: readonly CampusLocation[] = [
 export const DEFAULT_LOCATION_ID = "tumakuru";
 
 export function getLocation(id: string | null | undefined): CampusLocation {
-  return LOCATIONS.find((l) => l.id === id) ?? LOCATIONS[0];
+  return LOCATIONS.find((l) => l.id === id) ?? LOCATIONS[0]!;
 }

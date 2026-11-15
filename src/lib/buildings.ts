@@ -69,7 +69,7 @@ export function exampleInput(today = new Date()): CalcInput {
       type: "hostel",
       notes: "Sample data: 3-storey RCC hostel with flat terrace, solar water heaters on the east wing.",
     },
-    months: emptyMonths(today).map((m) => ({ ...m, kWh: EXAMPLE_BY_MONTH[m.month] })),
+    months: emptyMonths(today).map((m) => ({ ...m, kWh: EXAMPLE_BY_MONTH[m.month] ?? null })),
     rooftop: { areaM2: 900, efficiency: DEFAULT_EFFICIENCY, performanceRatio: DEFAULT_PR },
     grid: { factorId: DEFAULT_FACTOR_ID, customFactor: null },
     locationId: DEFAULT_LOCATION_ID,

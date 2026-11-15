@@ -21,8 +21,8 @@ export function EnergyComboChart({ monthly }: { monthly: MonthlyResult[] }) {
     consumption: Math.round(r.consumptionKWh),
     solar: r.solarKWh === null ? null : Math.round(r.solarKWh),
   }));
-  const maxC = monthly.reduce((a, r) => (r.consumptionKWh > a.consumptionKWh ? r : a), monthly[0]);
-  const maxS = monthly.reduce((a, r) => ((r.solarKWh ?? 0) > (a.solarKWh ?? 0) ? r : a), monthly[0]);
+  const maxC = monthly.reduce<MonthlyResult | undefined>((a, r) => (!a || r.consumptionKWh > a.consumptionKWh ? r : a), undefined);
+  const maxS = monthly.reduce<MonthlyResult | undefined>((a, r) => (!a || (r.solarKWh ?? 0) > (a.solarKWh ?? 0) ? r : a), undefined);
   const summary = `Combo chart of monthly consumption and solar generation. Highest consumption ${maxC?.label}: ${num(maxC?.consumptionKWh)} kWh. Highest solar ${maxS?.label}: ${num(maxS?.solarKWh)} kWh. Full values are in the month-by-month table.`;
   return (
     <figure role="img" aria-label={summary}>

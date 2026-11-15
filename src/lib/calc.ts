@@ -211,8 +211,8 @@ export function last12CompleteMonths(today: Date, lagDays = 7): {
     }
     months.push({ key: `${yy}-${pad(mm)}`, year: yy, month: mm, label: monthLabel(yy, mm) });
   }
-  const first = months[0];
-  const last = months[11];
+  const first = months[0]!;
+  const last = months[11]!;
   return {
     months,
     startDate: `${first.year}-${pad(first.month)}-01`,
@@ -232,7 +232,7 @@ export function alignRadiation(
     const exact = radiation.find((r) => r.key === s.key);
     if (exact) return exact;
     const same = radiation.filter((r) => r.month === s.month);
-    return same.length ? same[same.length - 1] : null;
+    return same[same.length - 1] ?? null;
   });
 }
 
