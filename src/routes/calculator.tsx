@@ -101,7 +101,7 @@ function CalculatorPage() {
     currentCalcStore.set({ input, savedId: editId, computedAt: Date.now() });
     locationStore.set(input.locationId);
     draftStore.clear();
-    navigate({ to: "/results", search: {} });
+    navigate({ to: "/results" });
   };
 
   const loadExample = () => {
