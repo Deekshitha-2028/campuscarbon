@@ -93,7 +93,7 @@ function CalculatorPage() {
       if (Object.keys(validateStep(s, form).errors).length) {
         goTo(s);
         setShowErrors(true);
-        toast.error(`Please fix the ${STEPS[s].toLowerCase()} step first.`);
+        toast.error(`Please fix the ${(STEPS[s] ?? "").toLowerCase()} step first.`);
         return;
       }
     }
@@ -101,7 +101,7 @@ function CalculatorPage() {
     currentCalcStore.set({ input, savedId: editId, computedAt: Date.now() });
     locationStore.set(input.locationId);
     draftStore.clear();
-    navigate({ to: "/results", search: {} });
+    navigate({ to: "/results" });
   };
 
   const loadExample = () => {
@@ -118,7 +118,7 @@ function CalculatorPage() {
     goTo(0);
   };
 
-  const StepView = [StepBuilding, StepConsumption, StepRooftop, StepGrid][step];
+  const StepView = [StepBuilding, StepConsumption, StepRooftop, StepGrid][step] ?? StepBuilding;
 
   return (
     <div className="mx-auto max-w-5xl px-4 py-10 sm:px-6">

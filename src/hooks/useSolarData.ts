@@ -1,19 +1,23 @@
-import { useQuery } from "@tanstack/react-query";
+import { queryOptions, useQuery } from "@tanstack/react-query";
 import { useSyncExternalStore } from "react";
 import { getLocation } from "@/lib/locations";
 import { fallbackSignal, fetchArchive, fetchForecast } from "@/lib/openMeteo";
 
 const HOUR = 60 * 60 * 1000;
 
-export function useArchive(locationId: string) {
+export function archiveQueryOptions(locationId: string) {
   const loc = getLocation(locationId);
-  return useQuery({
+  return queryOptions({
     queryKey: ["open-meteo", "archive", loc.id],
     queryFn: () => fetchArchive(loc),
     staleTime: 12 * HOUR,
     gcTime: 24 * HOUR,
     retry: 1,
   });
+}
+
+export function useArchive(locationId: string) {
+  return useQuery(archiveQueryOptions(locationId));
 }
 
 export function useForecast(locationId: string) {

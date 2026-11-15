@@ -281,7 +281,7 @@ export function StepRooftop({ form, update, issues, showErrors }: Props) {
               max={23}
               step={0.5}
               value={[eff !== null && !Number.isNaN(eff) ? Math.min(23, Math.max(15, eff)) : 20]}
-              onValueChange={([v]) => update({ efficiencyPct: String(v) })}
+              onValueChange={(vals) => update({ efficiencyPct: String(vals[0] ?? 20) })}
             />
             <div className="relative w-24 shrink-0">
               <Input id="eff" inputMode="decimal" className="pr-7 tabular" value={form.efficiencyPct} onChange={(e) => update({ efficiencyPct: e.target.value })} aria-invalid={!!err.efficiencyPct} />
@@ -306,7 +306,7 @@ export function StepRooftop({ form, update, issues, showErrors }: Props) {
               max={0.85}
               step={0.01}
               value={[pr !== null && !Number.isNaN(pr) ? Math.min(0.85, Math.max(0.65, pr)) : 0.75]}
-              onValueChange={([v]) => update({ pr: v.toFixed(2) })}
+              onValueChange={(vals) => update({ pr: (vals[0] ?? 0.75).toFixed(2) })}
             />
             <Input id="pr" inputMode="decimal" className="w-24 shrink-0 tabular" value={form.pr} onChange={(e) => update({ pr: e.target.value })} aria-invalid={!!err.pr} />
           </div>

@@ -69,7 +69,7 @@ export function exampleInput(today = new Date()): CalcInput {
       type: "hostel",
       notes: "Sample data: 3-storey RCC hostel with flat terrace, solar water heaters on the east wing.",
     },
-    months: emptyMonths(today).map((m) => ({ ...m, kWh: EXAMPLE_BY_MONTH[m.month] })),
+    months: emptyMonths(today).map((m) => ({ ...m, kWh: EXAMPLE_BY_MONTH[m.month] ?? null })),
     rooftop: { areaM2: 900, efficiency: DEFAULT_EFFICIENCY, performanceRatio: DEFAULT_PR },
     grid: { factorId: DEFAULT_FACTOR_ID, customFactor: null },
     locationId: DEFAULT_LOCATION_ID,
@@ -142,4 +142,24 @@ export function renameBuilding(id: string, name: string) {
 
 export function deleteBuilding(id: string) {
   buildingsStore.set((list) => list.filter((b) => b.id !== id));
+}
+
+/** Sample CSE department: labs and air-conditioned server room, dips in May and December vacations. */
+const DEPT_BY_MONTH: Record<number, number> = {
+  1: 21400, 2: 23100, 3: 25600, 4: 26900, 5: 17800, 6: 19200,
+  7: 22300, 8: 23000, 9: 22600, 10: 21900, 11: 21100, 12: 16400,
+};
+
+export function exampleDepartmentInput(today = new Date()): CalcInput {
+  return {
+    building: {
+      name: "CSE Department block",
+      type: "department",
+      notes: "Sample data: 4-storey department with 6 computer labs and a small server room.",
+    },
+    months: emptyMonths(today).map((m) => ({ ...m, kWh: DEPT_BY_MONTH[m.month] ?? null })),
+    rooftop: { areaM2: 620, efficiency: DEFAULT_EFFICIENCY, performanceRatio: DEFAULT_PR },
+    grid: { factorId: DEFAULT_FACTOR_ID, customFactor: null },
+    locationId: DEFAULT_LOCATION_ID,
+  };
 }
