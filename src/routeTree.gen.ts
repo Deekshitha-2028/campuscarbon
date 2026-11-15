@@ -10,7 +10,10 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as BuildingsRouteImport } from './routes/buildings'
 import { Route as CalculatorRouteImport } from './routes/calculator'
+import { Route as LearnRouteImport } from './routes/learn'
+import { Route as MethodologyRouteImport } from './routes/methodology'
 import { Route as ResultsRouteImport } from './routes/results'
 import { Route as SolarRouteImport } from './routes/solar'
 
@@ -19,9 +22,24 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const BuildingsRoute = BuildingsRouteImport.update({
+  id: '/buildings',
+  path: '/buildings',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const CalculatorRoute = CalculatorRouteImport.update({
   id: '/calculator',
   path: '/calculator',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LearnRoute = LearnRouteImport.update({
+  id: '/learn',
+  path: '/learn',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MethodologyRoute = MethodologyRouteImport.update({
+  id: '/methodology',
+  path: '/methodology',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ResultsRoute = ResultsRouteImport.update({
@@ -37,34 +55,68 @@ const SolarRoute = SolarRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/buildings': typeof BuildingsRoute
   '/calculator': typeof CalculatorRoute
+  '/learn': typeof LearnRoute
+  '/methodology': typeof MethodologyRoute
   '/results': typeof ResultsRoute
   '/solar': typeof SolarRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/buildings': typeof BuildingsRoute
   '/calculator': typeof CalculatorRoute
+  '/learn': typeof LearnRoute
+  '/methodology': typeof MethodologyRoute
   '/results': typeof ResultsRoute
   '/solar': typeof SolarRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/buildings': typeof BuildingsRoute
   '/calculator': typeof CalculatorRoute
+  '/learn': typeof LearnRoute
+  '/methodology': typeof MethodologyRoute
   '/results': typeof ResultsRoute
   '/solar': typeof SolarRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/calculator' | '/results' | '/solar'
+  fullPaths:
+    | '/'
+    | '/buildings'
+    | '/calculator'
+    | '/learn'
+    | '/methodology'
+    | '/results'
+    | '/solar'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/calculator' | '/results' | '/solar'
-  id: '__root__' | '/' | '/calculator' | '/results' | '/solar'
+  to:
+    | '/'
+    | '/buildings'
+    | '/calculator'
+    | '/learn'
+    | '/methodology'
+    | '/results'
+    | '/solar'
+  id:
+    | '__root__'
+    | '/'
+    | '/buildings'
+    | '/calculator'
+    | '/learn'
+    | '/methodology'
+    | '/results'
+    | '/solar'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  BuildingsRoute: typeof BuildingsRoute
   CalculatorRoute: typeof CalculatorRoute
+  LearnRoute: typeof LearnRoute
+  MethodologyRoute: typeof MethodologyRoute
   ResultsRoute: typeof ResultsRoute
   SolarRoute: typeof SolarRoute
 }
@@ -78,11 +130,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/buildings': {
+      id: '/buildings'
+      path: '/buildings'
+      fullPath: '/buildings'
+      preLoaderRoute: typeof BuildingsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/calculator': {
       id: '/calculator'
       path: '/calculator'
       fullPath: '/calculator'
       preLoaderRoute: typeof CalculatorRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/learn': {
+      id: '/learn'
+      path: '/learn'
+      fullPath: '/learn'
+      preLoaderRoute: typeof LearnRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/methodology': {
+      id: '/methodology'
+      path: '/methodology'
+      fullPath: '/methodology'
+      preLoaderRoute: typeof MethodologyRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/results': {
@@ -104,7 +177,10 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  BuildingsRoute: BuildingsRoute,
   CalculatorRoute: CalculatorRoute,
+  LearnRoute: LearnRoute,
+  MethodologyRoute: MethodologyRoute,
   ResultsRoute: ResultsRoute,
   SolarRoute: SolarRoute,
 }
